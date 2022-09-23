@@ -1,15 +1,20 @@
 {
   "expo": {
-    "name": "rn-ts",
-    "slug": "rn-ts",
+    "name": "rn-ts-template",
+    "slug": "rn-ts-template",
     "version": "1.0.0",
+    "owner": "tilkofjin",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "description": "react native ts Template",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
+    },
+    "runtimeVersion": {
+      "policy": "nativeVersion"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,6 +22,7 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "githubUrl": "https://github.com/tilkofjin/rn-ts-template.git",
     "ios": {
       "supportsTablet": true
     },
