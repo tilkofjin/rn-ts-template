@@ -1,30 +1,52 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from "@react-navigation/native";
+import LoginScreen from "screens/Login";
+import { ColorSchemeName } from "react-native";
+import { RootStackParamList } from "src/types";
+import BottomTabNavigator from "screens/BottomTabNav";
+import NotFoundScreen from "screens/NotFoundScreen";
+import ModalScreen from "screens/ModalScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import LinkingConfiguration from "./LinkingConfig";
 
-import Home from "screens/home";
-import Login from "screens/login";
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const MainStack = createNativeStackNavigator();
-
-const Main = () => {
+const RootNavigator = () => {
   return (
-    <MainStack.Navigator
-      screenOptions={{
-        headerShown: true,
-      }}
-      initialRouteName="Login"
-    >
-      <MainStack.Screen name="Login" component={Login} />
-      <MainStack.Screen name="Home" component={Home} />
-    </MainStack.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Root"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NotFound"
+        component={NotFoundScreen}
+        options={{ title: "Oops!" }}
+      />
+      <Stack.Group screenOptions={{ presentation: "modal" }}>
+        <Stack.Screen name="Modal" component={ModalScreen} />
+      </Stack.Group>
+      <Stack.Screen name="Login" component={LoginScreen} />
+    </Stack.Navigator>
   );
 };
 
-export default () => {
+export const Navigation = ({
+  colorScheme,
+}: {
+  colorScheme: ColorSchemeName;
+}) => {
   return (
-    <NavigationContainer>
-      <Main />
+    <NavigationContainer
+      linking={LinkingConfiguration}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+    >
+      <RootNavigator />
     </NavigationContainer>
   );
 };

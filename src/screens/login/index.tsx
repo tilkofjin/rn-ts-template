@@ -1,14 +1,14 @@
 import { Button, StyleSheet, Text, View, Image } from "react-native";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import Checkbox from "expo-checkbox";
+import { RootStackScreenProps } from "src/types";
 const wechatIcon = require("images/icons/wechat.png");
 
-const Login = ({ navigation }: any) => {
+const Login: FC<RootStackScreenProps<'Login'>> = ({ navigation }) => {
   const [isChecked, setChecked] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState("");
 
   const wechatLogin = () => {
-    navigation.push("Home");
+    navigation.push('NotFound')
   };
 
   return (

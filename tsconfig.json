@@ -21,6 +21,12 @@
       "components/*": [
         "./src/components/*"
       ],
+      "hooks/*":[
+        "./src/hooks/*"
+      ],
+      "constants/*":[
+        "./src/constants/*"
+      ],
       "images/*": [
         "./src/images/*"
       ],
@@ -29,6 +35,9 @@
       ],
       "navigation/*":[
         "./src/navigation/*"
+      ],
+      "stores/*":[
+        "./src/stores/*"
       ]
     },
   },
