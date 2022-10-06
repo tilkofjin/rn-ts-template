@@ -6,7 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import useCachedResources from "hooks/useCachedResources";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Provider } from "react-redux";
-import store from "stores/store";
+import { store } from "stores/store";
 
 const App = () => {
   const colorScheme = useColorScheme();

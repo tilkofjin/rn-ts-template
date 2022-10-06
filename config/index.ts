@@ -1,7 +1,7 @@
 const packageJSON = require('../package.json');
 
 export type APP_ENV_Type = 'development' | 'staging' | 'production';
-
+export type ThemeStyle = 'auto' | 'light' | 'dark';
 export type ConfigType = {
   scheme: string;
   icon: string;
