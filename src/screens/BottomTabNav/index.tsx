@@ -6,6 +6,7 @@ import Colors from "constants/Colors";
 import TabOne from "screens/TabOne";
 import TabTwo from "screens/TabTwo";
 import { FontAwesome } from "@expo/vector-icons";
+import { useAppSelector } from "stores/store/storeHooks";
 
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
@@ -15,14 +16,14 @@ const TabBarIcon = (props: {
 }) => <FontAwesome size={25} {...props} />;
 
 const BottomTabNav = () => {
-  const colorScheme = useColorScheme();
+  const themeState = useAppSelector((state) => state.theme);
 
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
       screenOptions={{
-        tabBarActiveTintColor: colorScheme
-          ? Colors[colorScheme].tint
+        tabBarActiveTintColor: themeState.theme
+          ? Colors[themeState.theme].tint
           : undefined,
       }}
     >
@@ -34,7 +35,7 @@ const BottomTabNav = () => {
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate("Login")}
+              onPress={() => navigation.navigate("Modal")}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}
@@ -42,7 +43,7 @@ const BottomTabNav = () => {
               <FontAwesome
                 name="info-circle"
                 size={25}
-                color={colorScheme ? Colors[colorScheme].text : undefined}
+                color={themeState.theme ? Colors[themeState.theme].text : undefined}
                 style={{ marginRight: 15 }}
               />
             </Pressable>
@@ -52,24 +53,9 @@ const BottomTabNav = () => {
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwo}
-        options={({ navigation }) => ({
+        options={() => ({
           title: "我的",
           tabBarIcon: ({ color }) => <TabBarIcon name="user-o" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={colorScheme ? Colors[colorScheme].text : undefined}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
         })}
       />
     </BottomTab.Navigator>

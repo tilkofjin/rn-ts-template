@@ -1,56 +1,75 @@
-import { Button, StyleSheet, Text, View, Image } from "react-native";
-import React, { FC, useState } from "react";
+import { Button, StyleSheet, Image } from "react-native";
+import React, { FC, useEffect, useState } from "react";
+import { Text, View } from "components/Themed";
 import Checkbox from "expo-checkbox";
 import { RootStackScreenProps } from "src/types";
-const wechatIcon = require("images/icons/wechat.png");
+import { useAppDispatch, useAppSelector } from "stores/store/storeHooks";
+import { TextInput } from "react-native-gesture-handler";
+import { setPassword, setUsername, login } from "stores/reducers/Login";
+const wechatIcon = require("../../../assets/images/icons/wechat.png");
 
-const Login: FC<RootStackScreenProps<'Login'>> = ({ navigation }) => {
-  const [isChecked, setChecked] = useState(false);
+const Login: FC<RootStackScreenProps<"Login">> = ({ navigation, route }) => {
+  const [isChecked, setIsChecked] = useState(false);
+  const loginState = useAppSelector((state) => state.login);
+  const dispatch = useAppDispatch();
 
-  const wechatLogin = () => {
-    navigation.push('NotFound')
-  };
+  useEffect(() => {
+    if (loginState.authentication) {
+      navigation.push("Root");
+    }
+  }, [loginState.authentication]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.titleBox}>
-        <View>
-          <Image source={wechatIcon} style={styles.logo} />
-          <Image source={wechatIcon} style={{ width: 305, height: 159 }} />
-        </View>
-        <View style={styles.serviceCenter}>
-          <Text>XXX 服务中心</Text>
-        </View>
+      <View style={styles.wechatBox}>
+        <Image source={wechatIcon} style={styles.wechatIcon} />
       </View>
-      <View style={styles.wechatBtnBox}>
+      <View style={styles.inputBox}>
+        <Text>用户名:</Text>
+        <TextInput
+          maxLength={30}
+          selectTextOnFocus
+          style={styles.input}
+          value={loginState.username}
+          onChangeText={(value) => dispatch(setUsername(value))}
+          placeholder=" please input username"
+        />
+      </View>
+      <View style={styles.inputBox}>
+        <Text>{"密    码:"}</Text>
+        <TextInput
+          maxLength={30}
+          selectTextOnFocus
+          style={styles.input}
+          value={loginState.password}
+          onChangeText={(value) => dispatch(setPassword(value))}
+          placeholder=" please input password"
+        />
+      </View>
+      {/* btn */}
+      <View style={styles.loginDecBox}>
         <Button
           title="微信授权登录"
           color="#f194ff"
-          onPress={() => wechatLogin()}
+          onPress={() => isChecked && dispatch(login())}
         />
-      </View>
-
-      {/* 微信Icon */}
-      <View style={styles.wechatIconBox}>
-        <Image source={wechatIcon} style={styles.wechatIcon} />
-      </View>
-      <View style={styles.loginDecBox}>
-        <View style={styles.checkboxContainer}>
+        <View style={styles.checkboxBox}>
           <Checkbox
             style={styles.checkbox}
             value={isChecked}
-            onValueChange={setChecked}
+            onValueChange={setIsChecked}
             color={isChecked ? "#4630EB" : undefined}
           />
-          <Text style={styles.loginDecText}>登录代表同意平台的</Text>
+          <Text onPress={() => setIsChecked(!isChecked)}>
+            登录代表同意平台的
+            <Text>
+              《用户服务协议》
+              <Text>
+                及<Text>《隐私政策》</Text>
+              </Text>
+            </Text>
+          </Text>
         </View>
-        <Text style={styles.loginDecExplain} onPress={() => {}}>
-          《用户服务协议》
-        </Text>
-        <Text>及</Text>
-        <Text style={styles.loginDecExplain} onPress={() => {}}>
-          《隐私政策》
-        </Text>
       </View>
     </View>
   );
@@ -59,29 +78,44 @@ const Login: FC<RootStackScreenProps<'Login'>> = ({ navigation }) => {
 export default Login;
 
 const styles = StyleSheet.create({
-  container: {},
-  logo: {
-    width: 200,
-    height: 200,
-    borderRadius: 10,
+  container: {
+    paddingLeft: 10,
+    paddingRight: 10,
   },
-  titleBox: {},
-  serviceCenter: {},
-  wechatAuth: {},
-  wechatBtnBox: {},
-  wechatIconBox: {},
+  input: {
+    height: 30,
+    margin: 12,
+    width: "80%",
+    borderWidth: 1,
+    borderRadius: 3,
+  },
+  wechatBox: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputBox: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   wechatIcon: {
     width: 75,
     height: 75,
+    borderRadius: 10,
+    textAlign: "center",
   },
-
-  checkboxContainer: {
+  checkboxBox: {
     flexDirection: "row",
+    alignItems: "center",
+  },
+  descBox: {
+    display: "flex",
   },
   checkbox: {
     margin: 8,
   },
-  loginDecBox: {},
-  loginDecText: {},
-  loginDecExplain: {},
+  loginDecBox: {
+    display: "flex",
+    marginTop: 20,
+  },
 });

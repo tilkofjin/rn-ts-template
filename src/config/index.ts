@@ -1,4 +1,4 @@
-const packageJSON = require('../package.json');
+const packageJSON = require('../../package.json');
 
 export type APP_ENV_Type = 'development' | 'staging' | 'production';
 export type ThemeStyle = 'auto' | 'light' | 'dark';
@@ -49,6 +49,4 @@ const production = {
 
 const configs = { development, staging, production } as any
 
-const Config = configs[APP_ENV];
-
-module.exports = { Config };
+export const Config = configs[APP_ENV];

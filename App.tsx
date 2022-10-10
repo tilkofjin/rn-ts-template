@@ -1,4 +1,3 @@
-import { useColorScheme } from "react-native";
 import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Navigation } from "navigation/index";
@@ -10,7 +9,6 @@ import { Provider } from "react-redux";
 import { persistor, store } from "stores/store";
 
 const App = () => {
-  const colorScheme = useColorScheme();
   const isLoadingComplete = useCachedResources();
 
   return isLoadingComplete ? (
@@ -18,7 +16,7 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <SafeAreaProvider>
-            <Navigation colorScheme={colorScheme} />
+            <Navigation />
             <StatusBar translucent />
           </SafeAreaProvider>
         </GestureHandlerRootView>

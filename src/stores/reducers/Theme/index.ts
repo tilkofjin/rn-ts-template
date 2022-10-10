@@ -1,8 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { ColorSchemeName } from 'react-native'
+
+interface ThemeState {
+  theme?: ColorSchemeName,
+  darkMode: boolean | null
+}
+
+const initialState: ThemeState = {
+  theme: null, darkMode: null
+}
 
 const slice = createSlice({
   name: 'theme',
-  initialState: { theme: null, darkMode: null },
+  initialState,
   reducers: {
     changeTheme: (state, { payload: { theme, darkMode } }) => {
       if (typeof theme !== 'undefined') {

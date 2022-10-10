@@ -5,31 +5,43 @@ import logger from 'redux-logger';
 import { FLUSH, REHYDRATE, PERSIST, PURGE, REGISTER, persistReducer, persistStore } from 'redux-persist'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import rootReducer from 'stores/reducers'
+import { api } from 'services/api';
 
-let middlewares = [thunk];
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export const isDev = process.env.NODE_ENV !== 'production'
+
 const persistConfig = {
 	key: 'root',	// 储存的标识名
 	storage: AsyncStorage,	// 储存方式
-	whitelist: ['theme'] 	//白名单 模块参与缓存
+	whitelist: ['theme'], 	//白名单 模块参与缓存
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const isDev = process.env.NODE_ENV !== 'production'
-if (__DEV__) {
-	const reduxImmutableStateInvariant = require('redux-immutable-state-invariant').default();
-	middlewares = [...middlewares, reduxImmutableStateInvariant, logger];
+const middlewares = (getDefaultMiddleware: any) => {
+	const middlewareList = [
+		...getDefaultMiddleware({
+			serializableCheck: {
+				ignoredActions: [FLUSH, REHYDRATE, PERSIST, PURGE, REGISTER],
+			},
+		}),
+		thunk,
+		api.middleware
+	]
+	if(__DEV__){
+		const reduxImmutableStateInvariant = require('redux-immutable-state-invariant').default();
+		return [...middlewareList, reduxImmutableStateInvariant, logger];
+	}
+	return middlewareList
 }
 
 const store = configureStore({
 	reducer: persistedReducer,
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-		serializableCheck: {
-			ignoredActions: [FLUSH, REHYDRATE, PERSIST, PURGE, REGISTER],
-		},
-	}).concat(middlewares)
+	middleware: (getDefaultMiddleware) => middlewares(getDefaultMiddleware)
 })
 
 const persistor = persistStore(store)
 
+// 监听焦点、网络通断、组件可视性变化、其他事件等
 setupListeners(store.dispatch)
 export { store, persistor }

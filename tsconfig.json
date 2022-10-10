@@ -21,10 +21,13 @@
       "components/*": [
         "./src/components/*"
       ],
-      "hooks/*":[
+      "hooks/*": [
         "./src/hooks/*"
       ],
-      "constants/*":[
+      "@config/*": [
+        "./src/config/*"
+      ],
+      "constants/*": [
         "./src/constants/*"
       ],
       "images/*": [
@@ -33,11 +36,17 @@
       "screens/*": [
         "./src/screens/*"
       ],
-      "navigation/*":[
+      "services/*": [
+        "./src/services/*"
+      ],
+      "navigation/*": [
         "./src/navigation/*"
       ],
-      "stores/*":[
+      "stores/*": [
         "./src/stores/*"
+      ],
+      "utils/*": [
+        "./src/utils/*"
       ]
     },
   },

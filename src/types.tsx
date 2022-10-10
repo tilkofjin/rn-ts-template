@@ -15,6 +15,7 @@ export type RootStackParamList = {
   Login: undefined;
   Modal: undefined;
   NotFound: undefined;
+  Posts: undefined;
 };
 
 export type RootTabParamList = {
