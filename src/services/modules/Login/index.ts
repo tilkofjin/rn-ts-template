@@ -1,19 +1,16 @@
 import { api } from 'services/api'
 
-interface Post {
+export interface Post {
   id: number
   name: string
 }
-type PostsResponse = Post[]
+export type PostsResponse = Post[]
 
-export const loginApi = api.injectEndpoints({
+export const postApi = api.injectEndpoints({
   endpoints: (build) => ({
     // getList
-    getPostsList: build.query<Promise<Post[]>, void>({
+    getPostsList: build.query<Record<string,any>, void>({
       query: () => '/posts',
-      transformResponse: (response: { result: Promise<Post[]> }) => {
-        return response.result;
-      },
     }),
     // add
     addPost: build.mutation<PostsResponse, Partial<Post>>({
@@ -53,6 +50,6 @@ export const {
   // lazy query
   useLazyGetPostsListQuery,
   useLazyGetPostsByIdQuery,
-} = loginApi;
-export default loginApi;
+} = postApi;
+export default postApi;
 

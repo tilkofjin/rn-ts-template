@@ -6,13 +6,15 @@ import { RootStackScreenProps } from "src/types";
 import { useAppDispatch, useAppSelector } from "stores/store/storeHooks";
 import { TextInput } from "react-native-gesture-handler";
 import { setPassword, setUsername, login } from "stores/reducers/Login";
+import { useLazyGetPostsListQuery } from "services/modules/Login";
 const wechatIcon = require("../../../assets/images/icons/wechat.png");
 
 const Login: FC<RootStackScreenProps<"Login">> = ({ navigation, route }) => {
   const [isChecked, setIsChecked] = useState(false);
   const loginState = useAppSelector((state) => state.login);
   const dispatch = useAppDispatch();
-
+  const [,{ data }] = useLazyGetPostsListQuery();
+  console.log("🚀 ~ file: index.tsx ~ line 17 ~ data", data);
   useEffect(() => {
     if (loginState.authentication) {
       navigation.push("Root");

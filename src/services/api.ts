@@ -15,7 +15,6 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithInterceptor: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
   const result: QueryReturnValue<any, FetchBaseQueryError, FetchBaseQueryMeta> = await baseQuery(args, api, extraOptions)
   const { error, meta } = result;
-  console.log("🚀 ~ file: api.ts ~ line 18 ~ constbaseQueryWithInterceptor:BaseQueryFn<string|FetchArgs,unknown,FetchBaseQueryError>= ~ error", error)
   const { request } = meta as FetchBaseQueryMeta;
   const url: string = request.url;
   if (error) {
