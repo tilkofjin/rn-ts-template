@@ -5,7 +5,7 @@ import Checkbox from "expo-checkbox";
 import { RootStackScreenProps } from "src/types";
 import { useAppDispatch, useAppSelector } from "stores/store/storeHooks";
 import { TextInput } from "react-native-gesture-handler";
-import { setPassword, setUsername, login } from "stores/reducers/Login";
+import { setPassword, setUsername, setToken, login } from "stores/reducers/Login";
 import { useLazyGetPostsListQuery } from "services/modules/Login";
 const wechatIcon = require("../../../assets/images/icons/wechat.png");
 
@@ -53,7 +53,10 @@ const Login: FC<RootStackScreenProps<"Login">> = ({ navigation, route }) => {
         <Button
           title="微信授权登录"
           color="#f194ff"
-          onPress={() => isChecked && dispatch(login())}
+          onPress={() => {
+            dispatch(setToken(`123456`))
+            isChecked && dispatch(login())
+          }}
         />
         <View style={styles.checkboxBox}>
           <Checkbox

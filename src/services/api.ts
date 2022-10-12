@@ -2,12 +2,13 @@ import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError,
 import { Config } from '@config/index'
 import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
 import { printHttpError } from 'utils/intercept';
+import { RootState } from 'stores/store';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: Config.API_URL,
   prepareHeaders: (headers, { getState }) => {
-    // const token = (getState() as RootState).auth.token
-    // headers.set('authorization', `Bearer ${token}`);
+    const token = (getState() as RootState).login.token
+    headers.set('authorization', `Bearer ${token}`);
     return headers;
   },
 })

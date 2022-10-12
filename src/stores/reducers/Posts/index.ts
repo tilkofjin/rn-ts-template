@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { PostsResponse } from 'services/modules/Login';
+import { createSlice } from '@reduxjs/toolkit'
 
 interface PostState {
   list: any[];
