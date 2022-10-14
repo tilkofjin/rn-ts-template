@@ -37,6 +37,7 @@ const staging = {
   API_URL: 'https://dummyjson.com/',
   version: packageJSON.version,
 };
+
 const production = {
   APP_ENV: 'production',
   name: APP_NAME,

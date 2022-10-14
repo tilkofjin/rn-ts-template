@@ -8,7 +8,9 @@ const baseQuery = fetchBaseQuery({
   baseUrl: Config.API_URL,
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).login.token
-    headers.set('authorization', `Bearer ${token}`);
+    headers.set("Accept", "application/json");
+    headers.set("Content-Type", "application/json");
+    headers.set('Authorization', token ? `Bearer ${token}` : '');
     return headers;
   },
 })
